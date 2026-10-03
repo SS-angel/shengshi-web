@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 type MiningRecord = {
@@ -20,7 +20,7 @@ type PlayerResult = {
   error?: string;
 };
 
-export default function CrystalStats() {
+function CrystalStatsContent() {
   const searchParams = useSearchParams();
 
   const [record, setRecord] = useState<MiningRecord | null>(null);
@@ -341,5 +341,20 @@ function SummaryCard({
         {value}
       </p>
     </div>
+  );
+}
+export default function CrystalStats() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-[#080808] text-white">
+          <p className="text-gray-400">
+            載入仙晶礦統計資料...
+          </p>
+        </main>
+      }
+    >
+      <CrystalStatsContent />
+    </Suspense>
   );
 }
