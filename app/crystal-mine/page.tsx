@@ -13,6 +13,7 @@ export default function CrystalMine() {
   const [winningNumbers, setWinningNumbers] = useState<number[]>([]);
   const [records, setRecords] = useState<MiningRecord[]>([]);
 
+
   // =========================
   // 讀取歷史開採紀錄
   // =========================
@@ -62,7 +63,7 @@ export default function CrystalMine() {
     });
 
 
-    // 建立本次開採紀錄
+    // 建立本次紀錄
     const newRecord: MiningRecord = {
       id: Date.now(),
       date,
@@ -80,7 +81,7 @@ export default function CrystalMine() {
     setRecords(updatedRecords);
 
 
-    // 儲存至瀏覽器
+    // 儲存到瀏覽器
     localStorage.setItem(
       "shengshi-crystal-mine-records",
       JSON.stringify(updatedRecords)
@@ -105,10 +106,10 @@ export default function CrystalMine() {
       "shengshi-crystal-mine-records"
     );
 
-    // 清除畫面紀錄
+    // 清除歷史紀錄
     setRecords([]);
 
-    // 清除本次開採結果
+    // 清除目前開採結果
     setWinningNumbers([]);
   }
 
@@ -131,6 +132,7 @@ export default function CrystalMine() {
       }}
     >
 
+
       {/* =========================
           背景黑色遮罩
       ========================= */}
@@ -143,7 +145,9 @@ export default function CrystalMine() {
       <div className="relative z-10 mx-auto max-w-6xl">
 
 
-        {/* 返回首頁 */}
+        {/* =========================
+            返回首頁
+        ========================= */}
         <a
           href="/"
           className="
@@ -220,7 +224,7 @@ export default function CrystalMine() {
 
 
         {/* =========================
-            開啟礦區按鈕
+            開啟礦區
         ========================= */}
         <div className="mt-10 text-center">
 
@@ -295,7 +299,9 @@ export default function CrystalMine() {
         <div className="mt-10 border-t border-[#8e6d32]/50 pt-10">
 
 
-          {/* 紀錄標題 */}
+          {/* =========================
+              開採紀錄標題
+          ========================= */}
           <div className="flex items-start justify-between">
 
             <div>
@@ -311,7 +317,9 @@ export default function CrystalMine() {
             </div>
 
 
-            {/* 清除紀錄按鈕 */}
+            {/* =========================
+                清除紀錄
+            ========================= */}
             {records.length > 0 && (
               <button
                 onClick={clearRecords}
@@ -366,6 +374,7 @@ export default function CrystalMine() {
             <div className="mt-5 space-y-4">
 
               {records.map((record) => (
+
                 <div
                   key={record.id}
                   className="
@@ -385,7 +394,9 @@ export default function CrystalMine() {
                 >
 
 
-                  {/* 日期與時間 */}
+                  {/* =========================
+                      日期與時間
+                  ========================= */}
                   <div>
 
                     <p className="text-lg font-bold">
@@ -399,33 +410,67 @@ export default function CrystalMine() {
                   </div>
 
 
-                  {/* 當次開採號碼 */}
-                  <div className="flex flex-wrap gap-5">
+                  {/* =========================
+                      號碼＋本期統計
+                  ========================= */}
+                  <div className="flex flex-col items-end gap-4">
 
-                    {record.numbers.map((number) => (
-                      <div
-                        key={number}
-                        className="
-                          flex
-                          h-11
-                          w-11
-                          items-center
-                          justify-center
-                          rounded-full
-                          border
-                          border-[#8e6d32]
-                          bg-[#15120c]/90
-                          font-bold
-                          text-[#d8b56a]
-                        "
-                      >
-                        {number}
-                      </div>
-                    ))}
+
+                    {/* 當次開採號碼 */}
+                    <div className="flex flex-wrap gap-5">
+
+                      {record.numbers.map((number) => (
+                        <div
+                          key={number}
+                          className="
+                            flex
+                            h-11
+                            w-11
+                            items-center
+                            justify-center
+                            rounded-full
+                            border
+                            border-[#8e6d32]
+                            bg-[#15120c]/90
+                            font-bold
+                            text-[#d8b56a]
+                          "
+                        >
+                          {number}
+                        </div>
+                      ))}
+
+                    </div>
+
+
+                    {/* =========================
+                        統計本期
+                    ========================= */}
+                    <a
+                      href={`/crystal-mine/stats?id=${record.id}`}
+                      className="
+                        rounded-lg
+                        border
+                        border-[#8e6d32]
+                        bg-[#15120c]/90
+                        px-5
+                        py-2
+                        text-sm
+                        font-bold
+                        text-[#d8b56a]
+                        transition
+                        duration-300
+                        hover:bg-[#d8b56a]
+                        hover:text-black
+                      "
+                    >
+                      📊 統計本期
+                    </a>
 
                   </div>
 
                 </div>
+
               ))}
 
             </div>
